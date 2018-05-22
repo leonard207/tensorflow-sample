@@ -1,6 +1,5 @@
 package com.github.tensorflow;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
@@ -34,18 +33,12 @@ public class LabelImage {
         s.println("<image file> is the path to a JPEG image file");
     }
 
-    public static void main(String[] args) throws IOException {
-      /*  if (args.length != 2) {
-            printUsage(System.err);
-            System.exit(1);
-        }*/
-//        String modelDir = args[0];
-//        String imageFile = args[1];
+    public static void main(String[] args) {
 
-        byte[] graphDef = readAllBytesOrExit(Paths.get("E:\\tmp\\tensorflow_inception_graph.pb"));
+        byte[] graphDef = readAllBytesOrExit(Paths.get("models/tensorflow_inception_graph.pb"));
         List<String> labels =
-                readAllLinesOrExit(Paths.get( "E:\\tmp\\imagenet_comp_graph_label_strings.txt"));
-        byte[] imageBytes = readAllBytesOrExit(Paths.get("C:\\tmp\\ha.jpg"));
+                readAllLinesOrExit(Paths.get("models/imagenet_comp_graph_label_strings.txt"));
+        byte[] imageBytes = readAllBytesOrExit(Paths.get("images/123.jpg"));
 
         try (Tensor<Float> image = constructAndExecuteGraphToNormalizeImage(imageBytes)) {
             float[] labelProbabilities = executeInceptionGraph(graphDef, image);
